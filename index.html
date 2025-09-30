@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matías García-Hidalgo Garmendia - Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #300a24;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 0;
+            background: rgba(48, 10, 36, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 4px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid #5e2750;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            color: #ffffff;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .lang-btn:hover {
+            background: rgba(94, 39, 80, 0.5);
+        }
+
+        .lang-btn.active {
+            background: #dd4814;
+            color: #ffffff;
+        }
+
+        header {
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #dd4814 0%, #772953 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 20px 60px rgba(221, 72, 20, 0.4);
+            margin: 0 auto 30px;
+            animation: terminal-glow 3s ease-in-out infinite;
+            border: 2px solid #dd4814;
+        }
+
+        @keyframes terminal-glow {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(221, 72, 20, 0.4);
+            }
+            50% {
+                box-shadow: 0 20px 80px rgba(221, 72, 20, 0.6);
+            }
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: #dd4814;
+            margin-bottom: 16px;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .tagline {
+            font-size: 17px;
+            color: #aea79f;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .main-content {
+            padding: 60px 0 80px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .terminal-window {
+            background: #300a24;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+            border: 1px solid #5e2750;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .terminal-window:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(221, 72, 20, 0.3);
+            border-color: #dd4814;
+        }
+
+        .terminal-header {
+            background: #2c001e;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #5e2750;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-close { background: #dd4814; }
+        .dot-minimize { background: #f0ad4e; }
+        .dot-maximize { background: #5cb85c; }
+
+        .terminal-title {
+            margin-left: 12px;
+            color: #aea79f;
+            font-size: 13px;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .terminal-content {
+            padding: 32px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #dd4814;
+            margin-bottom: 24px;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        h2::before {
+            content: '$ ';
+            color: #5cb85c;
+        }
+
+        .about-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #aea79f;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-category h3 {
+            color: #5cb85c;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .skill-category h3::before {
+            content: '~/ ';
+            color: #dd4814;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(221, 72, 20, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid rgba(221, 72, 20, 0.4);
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .tag:hover {
+            background: #dd4814;
+            border-color: #dd4814;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(221, 72, 20, 0.4);
+        }
+
+        .experience-item h3,
+        .project-item h3 {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .meta {
+            color: #5cb85c;
+            font-weight: 500;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .description {
+            color: #aea79f;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .contact-item {
+            background: #300a24;
+            color: #ffffff;
+            padding: 32px 24px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            border: 1px solid #5e2750;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(221, 72, 20, 0.4);
+            border-color: #dd4814;
+            background: rgba(221, 72, 20, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 36px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 40px;
+            color: #aea79f;
+            font-size: 13px;
+            border-top: 1px solid #5e2750;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            header {
+                padding: 80px 20px 60px;
+            }
+
+            .terminal-content {
+                padding: 24px 20px;
+            }
+
+            footer {
+                padding: 40px 20px;
+            }
+        }
+
+        [data-lang]:not([data-lang="es"]) {
+            display: none;
+        }
+
+        body.lang-en [data-lang="es"] {
+            display: none;
+        }
+
+        body.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #300a24;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dd4814;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5722;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #5cb85c;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="setLanguage('es')">ES</button>
+        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="profile-img">MG</div>
+            <h1>Matías García-Hidalgo</h1>
+            <div class="subtitle" data-lang="es">$ whoami → Development Lead & Full Stack Engineer</div>
+            <div class="subtitle" data-lang="en">$ whoami → Development Lead & Full Stack Engineer</div>
+            <p class="tagline" data-lang="es">Madrileño apasionado por la tecnología, los videojuegos y el diseño. Siempre curioso por entender cómo funcionan las cosas por dentro.</p>
+            <p class="tagline" data-lang="en">Madrid-based developer passionate about technology, video games, and design. Always curious to understand how things work from the inside.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-close"></div>
+                        <div class="terminal-dot dot-minimize"></div>
+                        <div class="terminal-dot dot-maximize"></div>
+                        <span class="terminal-title">about.sh</span>
+                    </div>
+                    <div class="terminal-content">
+                        <h2 data-lang="es">cat about_me.txt</h2>
+                        <h2 data-lang="en">cat about_me.txt</h2>
+                        <p class="about-content" data-lang="es">
+                            Nacido en Madrid, siempre me ha encantado la tecnología y los ordenadores. Me considero un poco friki, y me apasiona el mundo de los videojuegos y el diseño. 
+                            Lo que más me motiva es entender cómo funcionan las cosas por dentro: desde el código que construye una aplicación hasta las dinámicas de las industrias y empresas.<br><br>
+                            
+                            Como desarrollador backend, aplico la misma arquitectura sólida y escalable que uso en mis sistemas a mi vida diaria: pienso en soluciones a largo plazo, 
+                            optimizo procesos constantemente y siempre busco la eficiencia. Creo en la documentación clara y en construir cimientos robustos antes de añadir funcionalidades.<br><br>
+                            
+                            En el frontend y diseño, traslado mi pasión por la experiencia de usuario a cada interacción: me obsesiona que cada detalle visual tenga un propósito, 
+                            que las interfaces sean intuitivas y que el usuario sienta que todo fluye naturalmente. La estética debe servir a la función, nunca al revés.<br><br>
+                            
+                            Con más de 7 años de experiencia en desarrollo full stack, he trabajado en diversos sectores desde herramientas industriales hasta software médico y soluciones a medida.
+                        </p>
+                        <p class="about-content" data-lang="en">
+                            Born in Madrid, I've always loved technology and computers. I consider myself a bit of a geek, passionate about video games and design. 
+                            What drives me most is understanding how things work from the inside: from the code that builds an application to the dynamics of industries and companies.<br><br>
+                            
+                            As a backend developer, I apply the same solid and scalable architecture I use in my systems to my daily life: I think in long-term solutions, 
+                            constantly optimize processes, and always seek efficiency. I believe in clear documentation and building robust foundations before adding features.<br><br>
+                            
+                            In frontend and design, I transfer my passion for user experience to every interaction: I'm obsessed with every visual detail having a purpose, 
+                            interfaces being intuitive, and users feeling everything flows naturally. Aesthetics must serve function, never the other way around.<br><br>
+                            
+                            With over 7 years of experience in full stack development, I've worked across various sectors from industrial tools to medical software and custom solutions.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-close"></div>
+                        <div class="terminal-dot dot-minimize"></div>
+                        <div class="terminal-dot dot-maximize"></div>
+                        <span class="terminal-title">experience.sh</span>
+                    </div>
+                    <div class="terminal-content">
+                        <h2 data-lang="es">ls -la ~/experience/</h2>
+                        <h2 data-lang="en">ls -la ~/experience/</h2>
+                        
+                        <div class="experience-item" style="margin-bottom: 32px;">
+                            <h3>Development Team Lead</h3>
+                            <div class="meta">
+                                <span>📁 SyR</span>
+                                <span>📅 2023 - 2025</span>
+                            </div>
+                            <p class="description" data-lang="es">
+                                Jefe del departamento de desarrollo liderando equipos multidisciplinares. Gestión integral de proyectos utilizando Jira con workflows personalizados, 
+                                planificación de sprints y seguimiento de KPIs. Responsable de la comunicación directa con clientes, elaboración de presupuestos técnicos, 
+                                presentaciones ejecutivas y definición de arquitecturas. Stack técnico: Vue.js, Nuxt.js, Laravel, Python y Solidity para proyectos blockchain. 
+                                Mentoría de desarrolladores junior y senior, code reviews, y establecimiento de estándares de código y buenas prácticas.
+                            </p>
+                            <p class="description" data-lang="en">
+                                Development Team Lead managing multidisciplinary teams. Comprehensive project management using Jira with custom workflows, 
+                                sprint planning, and KPI tracking. Responsible for direct client communication, technical budget preparation, 
+                                executive presentations, and architecture definition. Technical stack: Vue.js, Nuxt.js, Laravel, Python, and Solidity for blockchain projects. 
+                                Mentoring junior and senior developers, code reviews, and establishing code standards and best practices.
+                            </p>
+                        </div>
+
+                        <div class="experience-item" style="margin-bottom: 32px;">
+                            <h3>Full Stack Developer</h3>
+                            <div class="meta">
+                                <span>📁 Sofpromed</span>
+                                <span>📅 2019 - 2023</span>
+                            </div>
+                            <p class="description" data-lang="es">
+                                Desarrollo de software médico especializado en cuadernos de recogida de datos (CRD). Backend desarrollado en PHP con CodeIgniter para garantizar la seguridad y fiabilidad de datos sensibles. 
+                                Frontend moderno con Vue 3 ofreciendo una interfaz intuitiva para profesionales de la salud. Manejo de datos médicos complejos cumpliendo con normativas de protección de datos.
+                            </p>
+                            <p class="description" data-lang="en">
+                                Development of medical software specialized in Electronic Data Capture (EDC) systems. Backend built with PHP and CodeIgniter ensuring security and reliability of sensitive data. 
+                                Modern frontend with Vue 3 providing an intuitive interface for healthcare professionals. Handling complex medical data while complying with data protection regulations.
+                            </p>
+                        </div>
+
+                        <div class="experience-item">
+                            <h3>Full Stack Developer</h3>
+                            <div class="meta">
+                                <span>📁 Codetechnic</span>
+                                <span>📅 2017 - 2019</span>
+                            </div>
+                            <p class="description" data-lang="es">
+                                Desarrollo de herramienta web para la compra-venta de material industrial. Stack técnico: PHP con Symfony en el backend para gestión robusta del negocio, y Twig como motor de plantillas en el frontend. 
+                                Implementación de sistema de catálogo, gestión de inventario, procesamiento de pedidos y panel de administración completo.
+                            </p>
+                            <p class="description" data-lang="en">
+                                Web tool development for buying and selling industrial materials. Technical stack: PHP with Symfony on the backend for robust business management, and Twig as the frontend template engine. 
+                                Implementation of catalog system, inventory management, order processing, and complete administration panel.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-close"></div>
+                        <div class="terminal-dot dot-minimize"></div>
+                        <div class="terminal-dot dot-maximize"></div>
+                        <span class="terminal-title">projects.sh</span>
+                    </div>
+                    <div class="terminal-content">
+                        <h2 data-lang="es">git log --projects</h2>
+                        <h2 data-lang="en">git log --projects</h2>
+                        
+                        <div class="project-item" style="margin-bottom: 32px;">
+                            <h3>ExclusiveSail</h3>
+                            <div class="meta">
+                                <span>🔧 Vue.js, Laravel</span>
+                                <span data-lang="es">⚡ Producción</span>
+                                <span data-lang="en">⚡ Production</span>
+                            </div>
+                            <p class="description" data-lang="es">
+                                Plataforma completa de renting de embarcaciones con gestión integral. Incluye sistema propio de gestión de barcos (inventario, disponibilidad, mantenimiento), 
+                                comunicación interna con clientes mediante panel administrativo, pasarela de pagos integrada, sistema de reservas en tiempo real con calendario de disponibilidad, 
+                                y gestión avanzada de flota. Una solución end-to-end para el negocio náutico.
+                            </p>
+                            <p class="description" data-lang="en">
+                                Complete boat rental platform with comprehensive management. Includes custom boat management system (inventory, availability, maintenance), 
+                                internal client communication through admin panel, integrated payment gateway, real-time booking system with availability calendar, 
+                                and advanced fleet management. An end-to-end solution for the nautical business.
+                            </p>
+                        </div>
+
+                        <div class="project-item">
+                            <h3 data-lang="es">Oráculo de Trading ML</h3>
+                            <h3 data-lang="en">ML Trading Oracle</h3>
+                            <div class="meta">
+                                <span>🔧 Python, ML, RL</span>
+                                <span>🤖 Soft Actor-Critic</span>
+                            </div>
+                            <p class="description" data-lang="es">
+                                Sistema de trading inteligente basado en Machine Learning y Reinforcement Learning. Implementación del algoritmo Soft Actor-Critic (SAC) en Python para toma de decisiones 
+                                de trading automatizadas. El modelo aprende estrategias óptimas mediante exploración y explotación del mercado, adaptándose a condiciones cambiantes. 
+                                Incluye backtesting, visualización de métricas y análisis de rendimiento.
+                            </p>
+                            <p class="description" data-lang="en">
+                                Intelligent trading system based on Machine Learning and Reinforcement Learning. Implementation of the Soft Actor-Critic (SAC) algorithm in Python for automated 
+                                trading decision-making. The model learns optimal strategies through market exploration and exploitation, adapting to changing conditions. 
+                                Includes backtesting, metrics visualization, and performance analysis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-close"></div>
+                        <div class="terminal-dot dot-minimize"></div>
+                        <div class="terminal-dot dot-maximize"></div>
+                        <span class="terminal-title">skills.sh</span>
+                    </div>
+                    <div class="terminal-content">
+                        <h2 data-lang="es">tree ~/skills/</h2>
+                        <h2 data-lang="en">tree ~/skills/</h2>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <h3>frontend/</h3>
+                                <div class="skill-tags">
+                                    <span class="tag">Vue.js</span>
+                                    <span class="tag">Vue 3</span>
+                                    <span class="tag">Nuxt.js</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Twig</span>
+                                    <span class="tag">HTML/CSS</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-category">
+                                <h3>backend/</h3>
+                                <div class="skill-tags">
+                                    <span class="tag">PHP</span>
+                                    <span class="tag">Laravel</span>
+                                    <span class="tag">Symfony</span>
+                                    <span class="tag">CodeIgniter</span>
+                                    <span class="tag">Python</span>
+                                    <span class="tag">MySQL</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-category">
+                                <h3>ml_blockchain/</h3>
+                                <div class="skill-tags">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">ML/RL</span>
+                                    <span class="tag">SAC</span>
+                                    <span class="tag">Solidity</span>
+                                    <span class="tag">Smart Contracts</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-category">
+                                <h3>tools/</h3>
+                                <div class="skill-tags">
+                                    <span class="tag">Git</span>
+                                    <span class="tag">REST APIs</span>
+                                    <span class="tag">UX/UI</span>
+                                    <span class="tag" data-lang="es">Pagos</span>
+                                    <span class="tag" data-lang="en">Payments</span>
+                                    <span class="tag" data-lang="es">Reservas</span>
+                                    <span class="tag" data-lang="en">Bookings</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-close"></div>
+                        <div class="terminal-dot dot-minimize"></div>
+                        <div class="terminal-dot dot-maximize"></div>
+                        <span class="terminal-title">contact.sh</span>
+                    </div>
+                    <div class="terminal-content">
+                        <h2 data-lang="es">ping contact@matias.dev</h2>
+                        <h2 data-lang="en">ping contact@matias.dev</h2>
+                        <div class="contact-grid">
+                            <a href="mailto:matias@email.com" class="contact-item">
+                                <div class="contact-icon">[📧]</div>
+                                <div>Email</div>
+                            </a>
+                            <a href="https://github.com/matias" target="_blank" class="contact-item">
+                                <div class="contact-icon">[⚙]</div>
+                                <div>GitHub</div>
+                            </a>
+                            <a href="https://linkedin.com/in/matias-garcia-hidalgo" target="_blank" class="contact-item">
+                                <div class="contact-icon">[🔗]</div>
+                                <div>LinkedIn</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>matias@ubuntu:~$ echo "© 2025 Matías García-Hidalgo Garmendia. All rights reserved."</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+            if (savedLang === 'en') {
+                document.body.className = 'lang-en';
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.includes('EN')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
